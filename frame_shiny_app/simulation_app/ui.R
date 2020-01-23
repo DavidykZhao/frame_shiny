@@ -14,6 +14,8 @@ library(shinydashboard)
 
 
 
+
+
 header <- dashboardHeader(
     title = 'Visualization of model performances',
     titleWidth = 350
@@ -47,8 +49,8 @@ tb_stage1 = tabBox(
         height = "600px",
         width = 12, 
     tabPanel("AG News",
-             fluidRow(             actionButton("go", "View the plot")
-                                   )
+             fluidRow(             actionButton("go", "View the plot"),
+                                   plotOutput('agnews_stage1'))
              ),
 
     tabPanel("DBPedia",
