@@ -10,6 +10,8 @@
 library(shiny)
 ### read in the overall data
 data_all = read.csv('www/all_stages.csv')
+source('www/func.R')
+
 
 ############### Academic_plotting theme #######################
 academic_theme =  theme(plot.title = element_text(face="bold", size=15), # use theme_get() to see available options
@@ -37,55 +39,6 @@ names(title_names) = ds_names  # ----> title_names is the dict name title_names[
 sota_errors = c(0.0062, 0.0449, 1-0.732, 0 ,0.3226 )
 names(sota_errors) = ds_names
 ################################################################
-
-
-############ Func for plotting stage1 over datasets ############
-plot_stage1 = function(ds_name) {
-    ## add control for the customer dataset because it does not have SOTA.
-    if (ds_name == 'customer'){
-        data_all %>%
-            filter(training_size > 5000 & dataset == ds_name) -> ds
-        ggplot(ds, aes(x = model_name))+
-            geom_boxplot(aes(y = accuracy)) +
-            theme_bw() + 
-            labs(title = paste("Algorithm performances on",  title_names[ds_name],  "dataset"))+
-            academic_theme +
-            geom_hline(yintercept= mean(ds$accuracy),linetype="dotted" )+
-            annotate("text", x= 5, y= mean(ds$accuracy) - 0.005, size = 3, label="Average")+
-            theme(plot.margin=grid::unit(c(0.5,0.5,0.3,0.3), "cm"))
-    } else {
-        
-        data_all %>%
-            filter(training_size > 5000 & dataset == ds_name) -> ds
-        ggplot(ds, aes(x = model_name))+
-            geom_boxplot(aes(y = accuracy)) +
-            theme_bw() + 
-            labs(title = paste("Algorithm performances on",  title_names[ds_name],  "dataset"))+
-            academic_theme +
-            geom_hline(yintercept= mean(ds$accuracy),linetype="dotted" )+
-            annotate("text", x= 5, y= mean(ds$accuracy) - 0.005, size = 3, label="Average")+
-            geom_hline(yintercept = 1 - sota_errors[ds_name], linetype = 'dotted')+
-            annotate('text', x = 1, y = 1 - sota_errors[ds_name], label = 'SOTA',size = 3)+
-            theme(plot.margin=grid::unit(c(0.5,0.5,0.3,0.3), "cm"))
-    }
-}
-
-#################################################################
-
-########### Func for plotting stage1 across datasets
-plot_stage1_ds_base = function(model) {
-    
-    data_all  %>%
-        filter(training_size > 5000 & model_name == model) %>%
-        ggplot(aes(x = dataset))+
-        geom_boxplot(aes(y = accuracy)) +
-        theme_bw() + 
-        labs(title = paste(model, "'s performances across different datasets"))+
-        academic_theme +
-        theme(plot.margin=grid::unit(c(0.5,0.5,0.3,0.3), "cm"))
-    
-}
-######################################################################
 
 
 
@@ -148,7 +101,27 @@ shinyServer(function(input, output) {
         plot_stage1_ds_base('RandomForest')
     })
     
-    
+    ####### add a helper func to respond to the download button
+    button_downloader_stage1 = function(button_name) {
+        
+        output[[button_name]] <- downloadHandler(
+            filename = function() { paste(button_name, '.png', sep='') },
+            content = function(file) {
+                # use re to extract the ds name from the button_name
+                ggsave(file, plot = plot_stage1(sub("_.*", "", button_name,perl=TRUE)), device = "png")
+            }
+        )
+    }
+    ###########################################
+    # add button response in server
+    for (i in c('agnews_button_stage1',
+                'customer_button_stage1',
+                'amazon_button_stage1',
+                'yelp_button_stage1',
+                'dbpedia_button_stage1')){
+        button_downloader_stage1(i)
+    }
+
     
     
 })
