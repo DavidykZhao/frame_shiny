@@ -8,10 +8,11 @@
 #
 
 library(shiny)
+### read in the overall data
 data_all = read.csv('www/all_stages.csv')
 
 ############### Academic_plotting theme #######################
-academic_theme =  theme(plot.title = element_text(face="bold", size=12), # use theme_get() to see available options
+academic_theme =  theme(plot.title = element_text(face="bold", size=15), # use theme_get() to see available options
                         axis.title.x = element_blank(),
                         axis.title.y = element_text(face="bold", size=10, angle=90),
                         panel.grid.major.y = element_blank(), # switch off major gridlines
@@ -38,7 +39,7 @@ names(sota_errors) = ds_names
 ################################################################
 
 
-############ Func for plotting stage1 across datasets ############
+############ Func for plotting stage1 over datasets ############
 plot_stage1 = function(ds_name) {
     ## add control for the customer dataset because it does not have SOTA.
     if (ds_name == 'customer'){
@@ -71,6 +72,27 @@ plot_stage1 = function(ds_name) {
 
 #################################################################
 
+########### Func for plotting stage1 across datasets
+plot_stage1_ds_base = function(model) {
+    
+    data_all  %>%
+        filter(training_size > 5000 & model_name == model) %>%
+        ggplot(aes(x = dataset))+
+        geom_boxplot(aes(y = accuracy)) +
+        theme_bw() + 
+        labs(title = paste(model, "'s performances across different datasets"))+
+        academic_theme +
+        theme(plot.margin=grid::unit(c(0.5,0.5,0.3,0.3), "cm"))
+    
+}
+######################################################################
+
+
+
+
+
+
+
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
 
@@ -99,6 +121,35 @@ shinyServer(function(input, output) {
         
         plot_stage1('customer')
     })
+    
+    #### add ds_base plot to the output
+    output$bert_stage1 = renderPlot({
+        
+        plot_stage1_ds_base('BERT')
+    })
+    
+    output$linear_svc_stage1 = renderPlot({
+        
+        plot_stage1_ds_base('LinearSVC')
+    })
+    
+    output$logistic_stage1 = renderPlot({
+        
+        plot_stage1_ds_base('LogisticRegression')
+    })
+    
+    output$nb_stage1 = renderPlot({
+        
+        plot_stage1_ds_base('NaiveBayes')
+    })
+    
+    output$rf_stage1 = renderPlot({
+        
+        plot_stage1_ds_base('RandomForest')
+    })
+    
+    
+    
     
 })
     
