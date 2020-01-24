@@ -49,16 +49,19 @@ tb_stage1 = tabBox(
         height = "600px",
         width = 12, 
     tabPanel("AG News",
-             fluidRow(             actionButton("go", "View the plot"),
-                                   plotOutput('agnews_stage1'))
+             fluidRow(           
+                plotOutput('agnews_stage1'))
              ),
 
     tabPanel("DBPedia",
-              "Tab content 2"),
+             fluidRow(           
+                 plotOutput('dbpedia_stage1'))),
     tabPanel("Yelp",
-             "Tab content 2"),
+             fluidRow(           
+                 plotOutput('yelp_stage1'))),
     tabPanel("Amazon",
-             "Tab content 2"))
+             fluidRow(           
+                 plotOutput('amazon_stage1'))))
 
 # tabPanel("Customer", 
 #          "Tab content 2"),
