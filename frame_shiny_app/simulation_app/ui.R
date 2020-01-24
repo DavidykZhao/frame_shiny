@@ -46,8 +46,7 @@ tb_stage1 = tabBox(
         title = "Datasets",
         # The id lets us use input$tabset1 on the server to find the current tab
         id = "tabset1", 
-        height = "600px",
-        width = 12, 
+        width = 10, 
     tabPanel("AG News",
              fluidRow(           
                 plotOutput('agnews_stage1'))
@@ -61,7 +60,11 @@ tb_stage1 = tabBox(
                  plotOutput('yelp_stage1'))),
     tabPanel("Amazon",
              fluidRow(           
-                 plotOutput('amazon_stage1'))))
+                 plotOutput('amazon_stage1'))),
+     tabPanel("Customer",
+         fluidRow(           
+             plotOutput('customer_stage1'))))
+
 
 # tabPanel("Customer", 
 #          "Tab content 2"),
@@ -74,8 +77,10 @@ body <- dashboardBody(
     tabItems(
         tabItem(tabName = "Introduction",
                 h2("Performances of models on a certain dataset"),
-                fluidRow(
-                    tb_stage1
+                br(),
+                fluidRow( column(10, offset = 2,
+                                 tb_stage1
+                     )
                 ) # closing bracket for the fluidRow
         )
         

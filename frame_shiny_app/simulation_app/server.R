@@ -11,7 +11,7 @@ library(shiny)
 data_all = read.csv('www/all_stages.csv')
 
 ############### Academic_plotting theme #######################
-academic_theme =  theme(plot.title = element_text(face="bold", size=10), # use theme_get() to see available options
+academic_theme =  theme(plot.title = element_text(face="bold", size=12), # use theme_get() to see available options
                         axis.title.x = element_blank(),
                         axis.title.y = element_text(face="bold", size=10, angle=90),
                         panel.grid.major.y = element_blank(), # switch off major gridlines
@@ -29,7 +29,7 @@ academic_theme =  theme(plot.title = element_text(face="bold", size=10), # use t
 ds_names = as.vector(unique(data_all$dataset))
 title_names = c("DBPedia", "AG News", "Yelp-full", "Customer Complaints", 'Amazon-full')
 names(title_names) = ds_names  # ----> title_names is the dict name title_names['dbpedia]
-#################
+#######################
 
 
 ############## Set the sota_error dict #######################
@@ -40,19 +40,33 @@ names(sota_errors) = ds_names
 
 ############ Func for plotting stage1 across datasets ############
 plot_stage1 = function(ds_name) {
-    
-    data_all %>%
-        filter(training_size > 5000 & dataset == ds_name) -> ds
-    ggplot(ds, aes(x = model_name))+
-        geom_boxplot(aes(y = accuracy)) +
-        theme_bw() + 
-        labs(title = paste("Algorithm performances on",  title_names[ds_name],  "dataset"))+
-        academic_theme +
-        geom_hline(yintercept= mean(ds$accuracy),linetype="dotted" )+
-        annotate("text", x= 4, y= mean(ds$accuracy) - 0.005, size = 3, label="Average")+
-        geom_hline(yintercept = 1 - sota_errors[ds_name], linetype = 'dotted')+
-        annotate('text', x = 1, y = 1 - sota_errors[ds_name], label = 'SOTA',size = 3)+
-        theme(plot.margin=grid::unit(c(0.5,0.5,0.3,0.3), "cm"))
+    ## add control for the customer dataset because it does not have SOTA.
+    if (ds_name == 'customer'){
+        data_all %>%
+            filter(training_size > 5000 & dataset == ds_name) -> ds
+        ggplot(ds, aes(x = model_name))+
+            geom_boxplot(aes(y = accuracy)) +
+            theme_bw() + 
+            labs(title = paste("Algorithm performances on",  title_names[ds_name],  "dataset"))+
+            academic_theme +
+            geom_hline(yintercept= mean(ds$accuracy),linetype="dotted" )+
+            annotate("text", x= 5, y= mean(ds$accuracy) - 0.005, size = 3, label="Average")+
+            theme(plot.margin=grid::unit(c(0.5,0.5,0.3,0.3), "cm"))
+    } else {
+        
+        data_all %>%
+            filter(training_size > 5000 & dataset == ds_name) -> ds
+        ggplot(ds, aes(x = model_name))+
+            geom_boxplot(aes(y = accuracy)) +
+            theme_bw() + 
+            labs(title = paste("Algorithm performances on",  title_names[ds_name],  "dataset"))+
+            academic_theme +
+            geom_hline(yintercept= mean(ds$accuracy),linetype="dotted" )+
+            annotate("text", x= 5, y= mean(ds$accuracy) - 0.005, size = 3, label="Average")+
+            geom_hline(yintercept = 1 - sota_errors[ds_name], linetype = 'dotted')+
+            annotate('text', x = 1, y = 1 - sota_errors[ds_name], label = 'SOTA',size = 3)+
+            theme(plot.margin=grid::unit(c(0.5,0.5,0.3,0.3), "cm"))
+    }
 }
 
 #################################################################
