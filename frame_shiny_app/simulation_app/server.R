@@ -9,36 +9,9 @@
 
 library(shiny)
 ### read in the overall data
-data_all = read.csv('www/all_stages.csv')
+data_all = read.csv('./www/all_stages.csv')
 source('www/func.R')
 
-
-############### Academic_plotting theme #######################
-academic_theme =  theme(plot.title = element_text(face="bold", size=15), # use theme_get() to see available options
-                        axis.title.x = element_blank(),
-                        axis.title.y = element_text(face="bold", size=10, angle=90),
-                        panel.grid.major.y = element_blank(), # switch off major gridlines
-                        panel.grid.minor = element_blank(), # switch off minor gridlines
-                        legend.position = 'bottom', # manually position the legend (numbers being from 0,0 at bottom left of whole plot to 1,1 at top right)
-                        legend.title = element_blank(), # switch off the legend title
-                        legend.text = element_text(size=8),
-                        legend.key.size = unit(0.5, "lines"),
-                        legend.key = element_blank(),
-                        axis.text.x = element_text(size = 12),
-                        panel.border = element_blank() )
-####################################################################################
-
-########### dict for converting ds name to title name
-ds_names = as.vector(unique(data_all$dataset))
-title_names = c("DBPedia", "AG News", "Yelp-full", "Customer Complaints", 'Amazon-full')
-names(title_names) = ds_names  # ----> title_names is the dict name title_names['dbpedia]
-#######################
-
-
-############## Set the sota_error dict #######################
-sota_errors = c(0.0062, 0.0449, 1-0.732, 0 ,0.3226 )
-names(sota_errors) = ds_names
-################################################################
 
 
 
@@ -113,7 +86,7 @@ shinyServer(function(input, output) {
         )
     }
     ###########################################
-    # add button response in server
+    # add downloadbutton response in server for stage1
     for (i in c('agnews_button_stage1',
                 'customer_button_stage1',
                 'amazon_button_stage1',
@@ -121,7 +94,47 @@ shinyServer(function(input, output) {
                 'dbpedia_button_stage1')){
         button_downloader_stage1(i)
     }
+#################################################
+  
+####### Add reactivity for the buttons for showing m.o.d results ###
+    # panel_show is the user defined input 
+    panel_show <- reactiveValues(tab_box = NULL, title = NULL)
+    # m.o.d button observe event
+    
+    observeEvent(input$m_o_d, {
+      
+        panel_show$title = tags$h2("Performances of models on a certain dataset")
+        panel_show$tab_box <- {
+          fluidRow(br(),
+          panel_show$title,
+          tb_stage1)
+          
+        }
+    })
+    
+    # m.a.d button observe event
+    observeEvent(input$m_a_d, {
+      panel_show$title = tags$h2("Performance of a certain model across datasets")
+      panel_show$tab_box <- {
+        fluidRow(br(),
+                 panel_show$title,
+                 tb_stage1_ds_base)
 
+      }
+    })
+    
+    
+    
+    output$button_reactive_plot <- renderUI({
+        if (is.null(panel_show$tab_box)) return()
+        panel_show$tab_box
+    })
+    
+    
+
+    
+    
+    
     
     
 })

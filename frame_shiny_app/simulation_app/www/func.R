@@ -1,3 +1,14 @@
+# read in the data
+data_all = read.csv('./www/all_stages.csv')
+
+
+
+
+
+
+
+
+
 # UI funtions
 ########################################################
 # tabBox for stage 1 - model performances over datasets
@@ -37,17 +48,7 @@ tb_stage1 = tabBox(
              downloadButton("customer_button_stage1", "Download")
            )))
 ########################################################
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-
-
-
-
-
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-# Server functions
-########################################################
 # tabBox for stage 1 - model performances across datasets
 tb_stage1_ds_base = tabBox(
   title = "Models",
@@ -71,7 +72,33 @@ tb_stage1_ds_base = tabBox(
   tabPanel("RandomForest",
            fluidRow(           
              plotOutput('rf_stage1'))))
+#####################################################
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# Server functions
 ########################################################
+
+
+########### dict for converting ds name to title name
+ds_names = as.vector(unique(data_all$dataset))
+title_names = c("DBPedia", "AG News", "Yelp-full", "Customer Complaints", 'Amazon-full')
+names(title_names) = ds_names  # ----> title_names is the dict name title_names['dbpedia]
+#################################################################
+
+
+############## Set the sota_error dict #######################
+sota_errors = c(0.0062, 0.0449, 1-0.732, 0 ,0.3226 )
+names(sota_errors) = ds_names
+################################################################
+
+###
 
 ############ Func for plotting stage1 over datasets ############
 plot_stage1 = function(ds_name) {
@@ -105,6 +132,23 @@ plot_stage1 = function(ds_name) {
 }
 
 #################################################################
+
+############### Academic_plotting theme #######################
+academic_theme =  theme(plot.title = element_text(face="bold", size=15), # use theme_get() to see available options
+                        axis.title.x = element_blank(),
+                        axis.title.y = element_text(face="bold", size=10, angle=90),
+                        panel.grid.major.y = element_blank(), # switch off major gridlines
+                        panel.grid.minor = element_blank(), # switch off minor gridlines
+                        legend.position = 'bottom', # manually position the legend (numbers being from 0,0 at bottom left of whole plot to 1,1 at top right)
+                        legend.title = element_blank(), # switch off the legend title
+                        legend.text = element_text(size=8),
+                        legend.key.size = unit(0.5, "lines"),
+                        legend.key = element_blank(),
+                        axis.text.x = element_text(size = 12),
+                        panel.border = element_blank() )
+####################################################################################
+
+
 
 ########### Func for plotting stage1 across datasets #####
 plot_stage1_ds_base = function(model) {

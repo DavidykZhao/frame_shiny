@@ -6,12 +6,14 @@
 #
 #    http://shiny.rstudio.com/
 #
-
+#install.packages('shinyWidgets')
 library(shiny)
 library(tidyverse)
 #install.packages('shinydashboard')
 library(shinydashboard)
+library(shinyWidgets)
 source('www/func.R')
+data_all = read.csv('./www/all_stages.csv')
 
 
 
@@ -41,17 +43,34 @@ sidebar <- dashboardSidebar(
 
 body <- dashboardBody(
     tabItems(
+      
         tabItem(tabName = "Introduction",
-                h2("Performances of models on a certain dataset"),
-                br(),
-                fluidRow( column(10, offset = 2,
-                                 tb_stage1
-                     )
-                ), # closing bracket for the fluidRow
-                h2("Performances of a certain model across datasets"),
-                br(),
-                fluidRow( column(10, offset = 2,
-                                 tb_stage1_ds_base))
+                # Add three buttons to control the panel presentations
+                actionBttn("m_o_d", label = "Models on a dataset", style = 'unite',
+                           color = 'default', icon = icon("database")),
+                actionBttn("m_a_d", label = "Model across datasets", style = 'unite',
+                           color = 'success', icon = icon("brain")),
+                actionBttn("ms_a_d", label = "Models across datasets", style = 'unite',
+                           color = 'success', icon = icon("object-group")),
+                
+                uiOutput("button_reactive_plot")
+                #uiOutput("m_a_d_plot")
+                
+                
+
+                
+
+        
+        
+                # tags$h2("Performances of models on a certain dataset"),
+                # br(),
+                # fluidRow( column(10, offset = 2,
+                #                  tb_stage1
+                #      )), # closing bracket for the fluidRow
+                # h2("Performances of a certain model across datasets"),
+                # br(),
+                # fluidRow( column(10, offset = 2,
+                #                  tb_stage1_ds_base))
         
       #### 2nd tabItem in the 1st tabItems  
         )
