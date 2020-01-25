@@ -74,6 +74,11 @@ shinyServer(function(input, output) {
         plot_stage1_ds_base('RandomForest')
     })
     
+    output$overview_stage1 = renderPlot({
+      
+      plot_stage1_overview()
+    })
+    
     ####### add a helper func to respond to the download button
     button_downloader_stage1 = function(button_name) {
         
@@ -86,6 +91,19 @@ shinyServer(function(input, output) {
         )
     }
     ###########################################
+    ####### add a helper func to respond to the download button for ds_base_stage1
+    button_downloader_stage1_ds_base = function(button_name) {
+      
+      output[[button_name]] <- downloadHandler(
+        filename = function() { paste(button_name, '.png', sep='') },
+        content = function(file) {
+          # use re to extract the ds name from the button_name
+          ggsave(file, plot = plot_stage1_ds_base(sub("_.*", "", button_name,perl=TRUE)), device = "png")
+        }
+      )
+    }
+
+    #############################################
     # add downloadbutton response in server for stage1
     for (i in c('agnews_button_stage1',
                 'customer_button_stage1',
@@ -95,7 +113,21 @@ shinyServer(function(input, output) {
         button_downloader_stage1(i)
     }
 #################################################
-  
+    # add downloadbutton response in server for stage1_ds_base
+    for (i in c('BERT_button_stage1',
+                'LinearSVC_button_stage1',
+                'NaiveBayes_button_stage1',
+                'LogisticRegression_button_stage1',
+                'RandomForest_button_stage1')){
+      button_downloader_stage1_ds_base(i)
+    }
+    
+    
+    
+    
+    
+    
+    
 ####### Add reactivity for the buttons for showing m.o.d results ###
     # panel_show is the user defined input 
     panel_show <- reactiveValues(tab_box = NULL, title = NULL)
@@ -120,6 +152,17 @@ shinyServer(function(input, output) {
                  panel_show$title,
                  tb_stage1_ds_base)
 
+      }
+    })
+    
+    # ms.a.d button observe event
+    observeEvent(input$ms_a_d, {
+      panel_show$title = tags$h2("Performance of models across datasets")
+      panel_show$tab_box <- {
+        fluidRow(br(),
+                 panel_show$title,
+                 tb_comprehensive_stage1)
+        
       }
     })
     

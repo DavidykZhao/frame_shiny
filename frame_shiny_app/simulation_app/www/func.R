@@ -57,22 +57,45 @@ tb_stage1_ds_base = tabBox(
   width = 10, 
   tabPanel("BERT",
            fluidRow(           
-             plotOutput('bert_stage1'))
+             plotOutput('bert_stage1')),
+           downloadButton("BERT_button_stage1", "Download")
   ),
   
   tabPanel("LinearSVC",
            fluidRow(           
-             plotOutput('linear_svc_stage1'))),
+             plotOutput('linear_svc_stage1'),
+             downloadButton("LinearSVC_button_stage1", "Download"))),
+  
   tabPanel("LogisticRegression",
            fluidRow(           
-             plotOutput('logistic_stage1'))),
+             plotOutput('logistic_stage1'),
+             downloadButton("LogisticRegression_button_stage1", "Download"))),
+  
   tabPanel("NaiveBayes",
            fluidRow(           
-             plotOutput('nb_stage1'))),
+             plotOutput('nb_stage1'),
+             downloadButton("NaiveBayes_button_stage1", "Download"))),
+  
   tabPanel("RandomForest",
            fluidRow(           
-             plotOutput('rf_stage1'))))
+             plotOutput('rf_stage1'),
+             downloadButton("RandomForest_button_stage1", "Download"))))
 #####################################################
+
+# tabBox for stage 1 - model performances over datasets
+tb_comprehensive_stage1 = tabBox(
+  title = "Overview",
+  # The id lets us use input$tabset1 on the server to find the current tab
+  id = "tabset1_overview", 
+  width = 10, 
+
+  fluidRow(   
+    plotOutput('overview_stage1')), # TODO
+    downloadButton("overview_button_stage1", "Download") # TODO
+           
+  
+)
+########################################################
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -161,6 +184,22 @@ plot_stage1_ds_base = function(model) {
     labs(title = paste(model, "'s performances across different datasets"))+
     academic_theme +
     theme(plot.margin=grid::unit(c(0.5,0.5,0.3,0.3), "cm"))
+  
+}
+######################################################################
+
+########### Func for plotting stage1 overview #####
+plot_stage1_overview = function() {
+
+  data_all  %>%
+    filter(training_size > 5000) %>%
+    ggplot(aes(x = dataset))+
+    geom_boxplot(aes(y = accuracy, color = model_name)) +
+    theme_bw() + 
+    labs(title = "Model performances across different datasets")+
+    academic_theme +
+    theme(plot.margin=grid::unit(c(0.5,0.5,0.3,0.3), "cm"))
+  
   
 }
 ######################################################################
