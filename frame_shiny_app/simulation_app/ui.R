@@ -13,6 +13,7 @@ library(tidyverse)
 library(shinydashboard)
 library(shinyWidgets)
 source('www/func1.R')
+source('www/func2.R')
 data_all = read.csv('./www/all_stages.csv')
 
 
@@ -35,8 +36,10 @@ sidebar <- dashboardSidebar(
         menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
         menuItem("Introduction", tabName = "Introduction", icon = icon("info-circle")),
         
-        menuItem("Stage_1", icon = icon("subscript"), tabName = "Stage_1",
-                 badgeLabel = "new", badgeColor = "green")
+        menuItem("Stage 1", icon = icon("database"), tabName = "Stage_1",
+                 badgeLabel = "plot", badgeColor = "green"),
+        menuItem("Stage 2", icon = icon("coins"), tabName = "Stage_2",
+                 badgeLabel = "plot", badgeColor = "yellow")
         )
     )
 
@@ -64,27 +67,19 @@ body <- dashboardBody(
                 uiOutput("button_reactive_plot")
                 #uiOutput("m_a_d_plot")
                 
+            ), # closing the first tabItem
+        
+        tabItem(tabName = "Stage_2"
                 
-
-                
-
         
         
-                # tags$h2("Performances of models on a certain dataset"),
-                # br(),
-                # fluidRow( column(10, offset = 2,
-                #                  tb_stage1
-                #      )), # closing bracket for the fluidRow
-                # h2("Performances of a certain model across datasets"),
-                # br(),
-                # fluidRow( column(10, offset = 2,
-                #                  tb_stage1_ds_base))
-        
-      #### 2nd tabItem in the 1st tabItems  
-        )
+        ) # closing the second tabItem
         
         
-      ) # closing bracket for tabItems
+        
+        
+        
+        ) # closing bracket for tabItems
     
     
     
