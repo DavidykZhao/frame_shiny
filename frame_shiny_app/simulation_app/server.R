@@ -90,7 +90,7 @@ shinyServer(function(input, output) {
             }
         )
     }
-    ###########################################
+
     ####### add a helper func to respond to the download button for ds_base_stage1
     button_downloader_stage1_ds_base = function(button_name) {
       
@@ -102,7 +102,18 @@ shinyServer(function(input, output) {
         }
       )
     }
-
+    
+    ######################## add a helper func to respond to the download button for overview
+    button_downloader_stage1_overview = function(button_name) {
+      
+      output[[button_name]] <- downloadHandler(
+        filename = function() { paste(button_name, '.png', sep='') },
+        content = function(file) {
+          ggsave(file, plot = plot_stage1_overview(), device = "png")
+        }
+      )
+    }
+###################################################################################
     #############################################
     # add downloadbutton response in server for stage1
     for (i in c('agnews_button_stage1',
@@ -122,6 +133,9 @@ shinyServer(function(input, output) {
       button_downloader_stage1_ds_base(i)
     }
     
+    # add download button response in server for stage1_overview
+    button_downloader_stage1_overview('overview_button_stage1')
+
     
     
     
@@ -137,9 +151,10 @@ shinyServer(function(input, output) {
       
         panel_show$title = tags$h2("Performances of models on a certain dataset")
         panel_show$tab_box <- {
-          fluidRow(br(),
+          fluidRow(column(width = 10, offset = 1,
+          br(),
           panel_show$title,
-          tb_stage1)
+          tb_stage1))
           
         }
     })
@@ -148,9 +163,9 @@ shinyServer(function(input, output) {
     observeEvent(input$m_a_d, {
       panel_show$title = tags$h2("Performance of a certain model across datasets")
       panel_show$tab_box <- {
-        fluidRow(br(),
+        fluidRow(column(width = 10, offset = 1,br(),
                  panel_show$title,
-                 tb_stage1_ds_base)
+                 tb_stage1_ds_base))
 
       }
     })
@@ -159,15 +174,16 @@ shinyServer(function(input, output) {
     observeEvent(input$ms_a_d, {
       panel_show$title = tags$h2("Performance of models across datasets")
       panel_show$tab_box <- {
-        fluidRow(br(),
+        fluidRow( column(width = 10, offset = 1,
+                 br(),
                  panel_show$title,
-                 tb_comprehensive_stage1)
+                 tb_comprehensive_stage1))
         
       }
     })
     
     
-    
+    # button_reactive_plot is the plot that is dependent on which button got clicked
     output$button_reactive_plot <- renderUI({
         if (is.null(panel_show$tab_box)) return()
         panel_show$tab_box

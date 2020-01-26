@@ -87,12 +87,12 @@ tb_comprehensive_stage1 = tabBox(
   title = "Overview",
   # The id lets us use input$tabset1 on the server to find the current tab
   id = "tabset1_overview", 
-  width = 10, 
+  width = 12, 
 
-  fluidRow(   
-    plotOutput('overview_stage1')), # TODO
-    downloadButton("overview_button_stage1", "Download") # TODO
-           
+  fluidRow( 
+    plotOutput('overview_stage1'), 
+    downloadButton("overview_button_stage1", "Download")
+   )
   
 )
 ########################################################
