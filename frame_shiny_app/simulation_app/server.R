@@ -10,7 +10,7 @@
 library(shiny)
 ### read in the overall data
 data_all = read.csv('./www/all_stages.csv')
-source('www/func.R')
+source('www/func1.R')
 
 
 

@@ -12,7 +12,7 @@ library(tidyverse)
 #install.packages('shinydashboard')
 library(shinydashboard)
 library(shinyWidgets)
-source('www/func.R')
+source('www/func1.R')
 data_all = read.csv('./www/all_stages.csv')
 
 
@@ -33,7 +33,9 @@ sidebar <- dashboardSidebar(
     
     sidebarMenu(
         menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
-        menuItem("Introduction", icon = icon("info-circle"), tabName = "Introduction",
+        menuItem("Introduction", tabName = "Introduction", icon = icon("info-circle")),
+        
+        menuItem("Stage_1", icon = icon("subscript"), tabName = "Stage_1",
                  badgeLabel = "new", badgeColor = "green")
         )
     )
@@ -44,15 +46,21 @@ sidebar <- dashboardSidebar(
 body <- dashboardBody(
     tabItems(
       
-        tabItem(tabName = "Introduction",
+        tabItem(tabName = "Stage_1",
                 # Add three buttons to control the panel presentations
-                actionBttn("m_o_d", label = "Models on a dataset", style = 'unite',
-                           color = 'default', icon = icon("database")),
-                actionBttn("m_a_d", label = "Model across datasets", style = 'unite',
-                           color = 'success', icon = icon("brain")),
-                actionBttn("ms_a_d", label = "Models across datasets", style = 'unite',
-                           color = 'success', icon = icon("object-group")),
+                fluidRow(column(width = 4,
+                  actionBttn("m_o_d", label = "Models on a dataset", style = 'unite',
+                           color = 'default', icon = icon("database"))
+                  ),
                 
+                column(width = 4, actionBttn("m_a_d", label = "Model across datasets", style = 'unite',
+                           color = 'success', icon = icon("brain"))
+                       ),
+                
+                column(width = 4, actionBttn("ms_a_d", label = "Models across datasets", style = 'unite',
+                           color = 'royal', icon = icon("object-group"))
+                       ),
+                ),
                 uiOutput("button_reactive_plot")
                 #uiOutput("m_a_d_plot")
                 

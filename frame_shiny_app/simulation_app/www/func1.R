@@ -20,32 +20,36 @@ tb_stage1 = tabBox(
   tabPanel("AG News",
            fluidRow(   
            plotOutput('agnews_stage1')),
-           downloadButton("agnews_button_stage1", "Download")
+           downloadBttn("agnews_button_stage1", "Download", style = 'unite', size = 'sm')
            
   ),
   
   tabPanel("DBPedia",
            fluidRow(   
              plotOutput('dbpedia_stage1'),
-             downloadButton("dbpedia_button_stage1", "Download")
+             downloadBttn("dbpedia_button_stage1", "Download", 
+                          style = 'unite', size = 'sm')
            )),
   
   tabPanel("Yelp",
            fluidRow( 
              plotOutput('yelp_stage1'),
-             downloadButton("yelp_button_stage1", "Download")
+             downloadBttn("yelp_button_stage1", "Download", 
+                          style = 'unite', size = 'sm')
            )),
   
   tabPanel("Amazon",
            fluidRow(   
              plotOutput('amazon_stage1'),
-             downloadButton("amazon_button_stage1", "Download")
+             downloadBttn("amazon_button_stage1", "Download", 
+                          style = 'unite', size = 'sm')
            )),
   
   tabPanel("Customer",
            fluidRow(  
              plotOutput('customer_stage1'),
-             downloadButton("customer_button_stage1", "Download")
+             downloadBttn("customer_button_stage1", "Download", 
+                          style = 'unite', size = 'sm')
            )))
 ########################################################
 
@@ -58,28 +62,33 @@ tb_stage1_ds_base = tabBox(
   tabPanel("BERT",
            fluidRow(           
              plotOutput('bert_stage1')),
-           downloadButton("BERT_button_stage1", "Download")
+           downloadBttn("BERT_button_stage1", "Download", 
+                        style = 'unite', size = 'sm')
   ),
   
   tabPanel("LinearSVC",
            fluidRow(           
              plotOutput('linear_svc_stage1'),
-             downloadButton("LinearSVC_button_stage1", "Download"))),
+             downloadBttn("LinearSVC_button_stage1", "Download", 
+                          style = 'unite', size = 'sm'))),
   
   tabPanel("LogisticRegression",
            fluidRow(           
              plotOutput('logistic_stage1'),
-             downloadButton("LogisticRegression_button_stage1", "Download"))),
+             downloadBttn("LogisticRegression_button_stage1", "Download", 
+                          style = 'unite', size = 'sm'))),
   
   tabPanel("NaiveBayes",
            fluidRow(           
              plotOutput('nb_stage1'),
-             downloadButton("NaiveBayes_button_stage1", "Download"))),
+             downloadBttn("NaiveBayes_button_stage1", "Download", 
+                          style = 'unite', size = 'sm'))),
   
   tabPanel("RandomForest",
            fluidRow(           
              plotOutput('rf_stage1'),
-             downloadButton("RandomForest_button_stage1", "Download"))))
+             downloadBttn("RandomForest_button_stage1", "Download", 
+                          style = 'unite', size = 'sm'))))
 #####################################################
 
 # tabBox for stage 1 - model performances over datasets
@@ -91,7 +100,8 @@ tb_comprehensive_stage1 = tabBox(
 
   fluidRow( 
     plotOutput('overview_stage1'), 
-    downloadButton("overview_button_stage1", "Download")
+    downloadBttn("overview_button_stage1", "Download", 
+                 style = 'unite', size = 'sm')
    )
   
 )
@@ -203,6 +213,7 @@ plot_stage1_overview = function() {
   
 }
 ######################################################################
+
 
 
 
