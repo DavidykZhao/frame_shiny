@@ -191,9 +191,35 @@ shinyServer(function(input, output) {
         panel_show$tab_box
     })
     
-    
+    ########################################################
+    ###########  Stage 2 ##############################
+    ########################################################
 
+    # add stage2 dataset facet plot
+    output$agnews_stage2_facet = renderPlot({
+      
+      plot_stage2_facet_model('agnews')
+    })
     
+    output$dbpedia_stage2_facet = renderPlot({
+      
+      plot_stage2_facet_model('dbpedia')
+    })
+    
+    output$yelp_stage2_facet = renderPlot({
+      
+      plot_stage2_facet_model('yelp')
+    })
+    
+    output$amazon_stage2_facet = renderPlot({
+      
+      plot_stage2_facet_model('amazon')
+    })
+    
+    output$customer_stage2_facet = renderPlot({
+      
+      plot_stage2_facet_model('customer')
+    })
     
     
     

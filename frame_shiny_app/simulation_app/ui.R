@@ -51,7 +51,8 @@ body <- dashboardBody(
       
         tabItem(tabName = "Stage_1",
                 # Add three buttons to control the panel presentations
-                fluidRow(column(width = 4,
+                fluidRow(br(),
+                         column(width = 4,
                   actionBttn("m_o_d", label = "Models on a dataset", style = 'unite',
                            color = 'default', icon = icon("database"))
                   ),
@@ -69,9 +70,18 @@ body <- dashboardBody(
                 
             ), # closing the first tabItem
         
-        tabItem(tabName = "Stage_2"
-                
         
+        tabItem(tabName = "Stage_2",
+                fluidRow( br(),
+                  column(width = 4, offset = 2,
+                                actionBttn("facet_model", label = "Facet by models", style = 'unite',
+                                           color = 'default', icon = icon("database"))),
+                column(width = 4, offset = 2,
+                                actionBttn("facet_ds", label = "Facet by datasets", style = 'unite',
+                                           color = 'default', icon = icon("database")))
+                
+                )      
+                
         
         ) # closing the second tabItem
         
