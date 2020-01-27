@@ -132,7 +132,7 @@ plot_stage3_facet_model = function(ds_name) {
           legend.position = c(0.70, 0.2))+
     facet_grid(~ model_name)+
     theme(axis.title.x=element_blank(),
-          axis.text.x = element_text(size = 6))+
+          axis.text.x = element_text(size = 10))+
     labs(color = 'Class name')+
     scale_fill_Publication()+
     # scale_fill_grey()+
@@ -159,7 +159,7 @@ plot_stage3_facet_data = function(modelname) {
           legend.position = c(0.80, 0.1))+
     facet_grid(~ dataset)+
     theme(axis.title.x=element_blank(),
-          axis.text.x = element_text(size = 6))+
+          axis.text.x = element_text(size = 10))+
     labs(color = 'Class name')+
     scale_colour_viridis_d()+
     theme(legend.position = "bottom")

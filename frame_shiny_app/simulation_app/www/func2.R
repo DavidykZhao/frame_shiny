@@ -134,6 +134,8 @@ plot_stage2_facet_model = function(ds_name) {
     theme(legend.text = element_text(size=10),
           legend.key.size = unit(1, "lines"),
           legend.position = c(0.8, 0.15))+
+    theme(axis.title.x=element_blank(),
+          axis.text.x = element_text(size = 10))+
     facet_grid(~ model_name)+
     labs(title = paste('Performances of models as training size grows for', ds_name, 'dataset'))
 }
@@ -159,6 +161,8 @@ plot_stage2_facet_data = function(modelname) {
     theme(legend.text = element_text(size=10),
           legend.key.size = unit(1, "lines"),
           legend.position = c(0.8, 0.15))+
+    theme(axis.title.x=element_blank(),
+          axis.text.x = element_text(size = 10))+
     facet_grid(~ dataset)+
     labs(title = paste('Performances of', modelname, 'as training size grows'))
 }
