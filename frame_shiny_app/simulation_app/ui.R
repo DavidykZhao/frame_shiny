@@ -73,12 +73,15 @@ body <- dashboardBody(
         
         tabItem(tabName = "Stage_2",
                 fluidRow( br(), 
-                  column(width = 4, offset = 2,
+                  column(width = 3, offset = 1,
                                 actionBttn("facet_model", label = "Facet by models", style = 'unite',
                                            color = 'default', icon = icon("database"))),
-                column(width = 4, offset = 2,
+                column(width = 3, offset = 1,
                                 actionBttn("facet_ds", label = "Facet by datasets", style = 'unite',
-                                           color = 'default', icon = icon("database")))
+                                           color = 'default', icon = icon("database"))),
+                column(width = 3, offset = 1,
+                       actionBttn("overview_stage2", label = "Overview", style = 'unite',
+                                  color = 'success', icon = icon("database"))),
                 
                 ),      
                 

@@ -252,6 +252,10 @@ shinyServer(function(input, output) {
       plot_stage2_facet_data('LogisticRegression')
     })
     
+    # output$stage2_overview = renderImage('stage2_overview.png',
+    #   deleteFile = F)
+    
+
     
     ####### Add reactivity for the buttons in stage 2 ###
     # panel_show is the user defined input 
@@ -273,12 +277,33 @@ shinyServer(function(input, output) {
     # add the second observeEvent here
     observeEvent(input$facet_ds, {
       
-      panel_show_stage2$title = tags$h2("Performances models across datasets")
+      panel_show_stage2$title = tags$h2("Performances of a certain model across datasets")
       panel_show_stage2$tab_box <- {
         fluidRow(column(width = 12,
                         br(),
                         panel_show_stage2$title,
                         tb_stage2_facet_data))
+        
+      }
+    })
+    
+    # add the third observeEvent here
+    observeEvent(input$overview_stage2, {
+      
+      panel_show_stage2$title = tags$h2("Performances of models across datasets")
+      panel_show_stage2$tab_box <- {
+        fluidRow(column(width = 12,
+                        br(),
+                        panel_show_stage2$title,
+                        tabBox(
+                          title = "Overview",
+                          # The id lets us use input$id on the server to find the current tab
+                          id = "tabset_stage2_overview", 
+                          width = 12,
+                          fluidRow( 
+                            tags$img(src='stage2_overview.png', width = 1200, height= 900)
+                            )
+                          )))
         
       }
     })
@@ -330,7 +355,13 @@ shinyServer(function(input, output) {
       button_downloader_stage2_facet_data(i)
     }
     
-    
+    ## add a download response to the overview plot in stage2 #TODO
+    # output[[button_name]] <- downloadHandler(
+    #   filename = function() { paste(button_name, '.png', sep='') },
+    #   content = function(file) {
+    #     # use re to extract the ds name from the button_name
+    #     ggsave(file, width = 14, plot = plot_stage2_facet_data(sub("_.*", "", button_name,perl=TRUE)), device = "png")
+    #   }
     
     
     
