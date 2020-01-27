@@ -15,6 +15,7 @@ library(shinyWidgets)
 source('www/func1.R')
 source('www/func2.R')
 data_all = read.csv('./www/all_stages.csv')
+data_all$training_size = as.factor(data_all$training_size)
 
 
 
@@ -66,13 +67,12 @@ body <- dashboardBody(
                        ),
                 ),
                 uiOutput("button_reactive_plot")
-                #uiOutput("m_a_d_plot")
-                
+
             ), # closing the first tabItem
         
         
         tabItem(tabName = "Stage_2",
-                fluidRow( br(),
+                fluidRow( br(), 
                   column(width = 4, offset = 2,
                                 actionBttn("facet_model", label = "Facet by models", style = 'unite',
                                            color = 'default', icon = icon("database"))),
@@ -80,8 +80,9 @@ body <- dashboardBody(
                                 actionBttn("facet_ds", label = "Facet by datasets", style = 'unite',
                                            color = 'default', icon = icon("database")))
                 
-                )      
+                ),      
                 
+                uiOutput('button_reactive_plot_stage2')
         
         ) # closing the second tabItem
         

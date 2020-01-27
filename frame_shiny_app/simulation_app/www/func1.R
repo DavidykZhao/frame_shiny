@@ -1,5 +1,6 @@
 # read in the data
 data_all = read.csv('./www/all_stages.csv')
+data_all$training_size = as.factor(data_all$training_size)
 
 
 
@@ -138,7 +139,8 @@ plot_stage1 = function(ds_name) {
   ## add control for the customer dataset because it does not have SOTA.
   if (ds_name == 'customer'){
     data_all %>%
-      filter(training_size > 5000 & dataset == ds_name) -> ds
+      filter(stage == "stage1") %>%
+      filter(dataset == ds_name) -> ds
     ggplot(ds, aes(x = model_name))+
       geom_boxplot(aes(y = accuracy)) +
       theme_bw() + 
@@ -150,7 +152,8 @@ plot_stage1 = function(ds_name) {
   } else {
     
     data_all %>%
-      filter(training_size > 5000 & dataset == ds_name) -> ds
+      filter(stage == "stage1") %>%
+      filter(dataset == ds_name) -> ds
     ggplot(ds, aes(x = model_name))+
       geom_boxplot(aes(y = accuracy)) +
       theme_bw() + 
@@ -187,7 +190,8 @@ academic_theme =  theme(plot.title = element_text(face="bold", size=15), # use t
 plot_stage1_ds_base = function(model) {
   
   data_all  %>%
-    filter(training_size > 5000 & model_name == model) %>%
+    filter(stage == "stage1") %>%
+    filter(model_name == model) %>%
     ggplot(aes(x = dataset))+
     geom_boxplot(aes(y = accuracy)) +
     theme_bw() + 
@@ -202,7 +206,7 @@ plot_stage1_ds_base = function(model) {
 plot_stage1_overview = function() {
 
   data_all  %>%
-    filter(training_size > 5000) %>%
+    filter(stage == "stage1") %>%
     ggplot(aes(x = dataset))+
     geom_boxplot(aes(y = accuracy, color = model_name)) +
     theme_bw() + 

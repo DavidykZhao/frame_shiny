@@ -10,6 +10,7 @@
 library(shiny)
 ### read in the overall data
 data_all = read.csv('./www/all_stages.csv')
+data_all$training_size = as.factor(data_all$training_size)
 source('www/func1.R')
 source('www/func2.R')
 
@@ -176,7 +177,7 @@ shinyServer(function(input, output) {
     observeEvent(input$ms_a_d, {
       panel_show$title = tags$h2("Performance of models across datasets")
       panel_show$tab_box <- {
-        fluidRow( column(width = 10, offset = 1,
+        fluidRow(column(width = 10, offset = 1,
                  br(),
                  panel_show$title,
                  tb_comprehensive_stage1))
@@ -190,6 +191,10 @@ shinyServer(function(input, output) {
         if (is.null(panel_show$tab_box)) return()
         panel_show$tab_box
     })
+    
+    
+    
+    
     
     ########################################################
     ###########  Stage 2 ##############################
@@ -221,8 +226,115 @@ shinyServer(function(input, output) {
       plot_stage2_facet_model('customer')
     })
     
+    ###### add stage2 dataset facet data plot #######
+    output$bert_stage2_facet_data = renderPlot({
+      
+      plot_stage2_facet_data('BERT')
+    })
+    
+    output$rf_stage2_facet_data = renderPlot({
+      
+      plot_stage2_facet_data('RandomForest')
+    })
+    
+    output$linearsvc_stage2_facet_data = renderPlot({
+      
+      plot_stage2_facet_data('LinearSVC')
+    })
+    
+    output$nb_stage2_facet_data = renderPlot({
+      
+      plot_stage2_facet_data('NaiveBayes')
+    })
+    
+    output$logisticregression_stage2_facet_data = renderPlot({
+      
+      plot_stage2_facet_data('LogisticRegression')
+    })
+    
+    
+    ####### Add reactivity for the buttons in stage 2 ###
+    # panel_show is the user defined input 
+    panel_show_stage2 <- reactiveValues(tab_box = NULL, title = NULL)
+
+    observeEvent(input$facet_model, {
+      
+      panel_show_stage2$title = tags$h2("Performances of models on a certain dataset")
+      panel_show_stage2$tab_box <- {
+        fluidRow(column(width = 12,
+          br(),
+                  panel_show_stage2$title,
+                  tb_stage2_facet_model))
+        
+      }
+    })
+    
+    
+    # add the second observeEvent here
+    observeEvent(input$facet_ds, {
+      
+      panel_show_stage2$title = tags$h2("Performances models across datasets")
+      panel_show_stage2$tab_box <- {
+        fluidRow(column(width = 12,
+                        br(),
+                        panel_show_stage2$title,
+                        tb_stage2_facet_data))
+        
+      }
+    })
+    
+    
+    output$button_reactive_plot_stage2 <- renderUI({
+      if (is.null(panel_show_stage2$tab_box)) return()
+      panel_show_stage2$tab_box
+    })
+    
+    ### add download button response 
+    button_downloader_stage2 = function(button_name) {
+      
+      output[[button_name]] <- downloadHandler(
+        filename = function() { paste(button_name, '.png', sep='') },
+        content = function(file) {
+          # use re to extract the ds name from the button_name
+          ggsave(file, width = 14, plot = plot_stage2_facet_model(sub("_.*", "", button_name,perl=TRUE)), device = "png")
+        }
+      )
+    }
+    
+    for (i in c('customer_button_stage2',
+                'amazon_button_stage2',
+                'yelp_button_stage2',
+                'dbpedia_button_stage2',
+                'agnews_button_stage2')){
+      button_downloader_stage2(i)
+    }
+    
+    ##### stage2 facet data buttons
+    ### add download button response 
+    button_downloader_stage2_facet_data = function(button_name) {
+      
+      output[[button_name]] <- downloadHandler(
+        filename = function() { paste(button_name, '.png', sep='') },
+        content = function(file) {
+          # use re to extract the ds name from the button_name
+          ggsave(file, width = 14, plot = plot_stage2_facet_data(sub("_.*", "", button_name,perl=TRUE)), device = "png")
+        }
+      )
+    }
+    
+    for (i in c('LogisticRegression_button_stage2',
+                'LinearSVC_button_stage2',
+                'NaiveBayes_button_stage2',
+                'RandomForest_button_stage2',
+                'BERT_button_stage2')){
+      button_downloader_stage2_facet_data(i)
+    }
     
     
     
-})
+    
+    
+    
+    
+}) # final brackets
     
