@@ -14,8 +14,11 @@ library(shinydashboard)
 library(shinyWidgets)
 source('www/func1.R')
 source('www/func2.R')
+source('www/func3.R')
+
 data_all = read.csv('./www/all_stages.csv')
 data_all$training_size = as.factor(data_all$training_size)
+data_all$class_num = as.factor(data_all$class_num)
 
 
 
@@ -40,7 +43,9 @@ sidebar <- dashboardSidebar(
         menuItem("Stage 1", icon = icon("database"), tabName = "Stage_1",
                  badgeLabel = "plot", badgeColor = "green"),
         menuItem("Stage 2", icon = icon("coins"), tabName = "Stage_2",
-                 badgeLabel = "plot", badgeColor = "yellow")
+                 badgeLabel = "plot", badgeColor = "yellow"),
+        menuItem("Stage 3", icon = icon("dice-three"), tabName = "Stage_3",
+                 badgeLabel = "plot", badgeColor = "red")
         )
     )
 
@@ -49,20 +54,37 @@ sidebar <- dashboardSidebar(
 
 body <- dashboardBody(
     tabItems(
+       tabItem( tabName = "dashboard",
+         fluidRow(column(8, offset = 2,
+                         h1("Welcome"),
+                         h2("test of this function")   
+                         
+                         
+                         )
+
+           
+           
+           
+         )
+         
+         
+         
+       ), # closing braket for the first tabItem
+      
       
         tabItem(tabName = "Stage_1",
                 # Add three buttons to control the panel presentations
-                fluidRow(br(),
-                         column(width = 4,
+                fluidRow( br(),
+                         column(width = 3, offset = 1,
                   actionBttn("m_o_d", label = "Models on a dataset", style = 'unite',
                            color = 'default', icon = icon("database"))
                   ),
                 
-                column(width = 4, actionBttn("m_a_d", label = "Model across datasets", style = 'unite',
+                column(width = 3, offset = 1, actionBttn("m_a_d", label = "Model across datasets", style = 'unite',
                            color = 'success', icon = icon("brain"))
                        ),
                 
-                column(width = 4, actionBttn("ms_a_d", label = "Models across datasets", style = 'unite',
+                column(width = 3, offset = 1, actionBttn("ms_a_d", label = "Models across datasets", style = 'unite',
                            color = 'royal', icon = icon("object-group"))
                        ),
                 ),
@@ -87,8 +109,23 @@ body <- dashboardBody(
                 
                 uiOutput('button_reactive_plot_stage2')
         
-        ) # closing the second tabItem
+        ),# closing the second tabItem
         
+        tabItem(tabName = "Stage_3",
+                fluidRow( br(), 
+                          column(width = 4, offset = 2,
+                                 actionBttn("facet_model_stage3", label = "Facet by models", style = 'unite',
+                                            color = 'default', icon = icon("database"))),
+                          column(width = 4, offset = 2,
+                                 actionBttn("facet_ds_stage3", label = "Facet by datasets", style = 'unite',
+                                            color = 'default', icon = icon("database"))),
+              
+                    
+                ),      
+                uiOutput('button_reactive_plot_stage3')
+                
+                
+        )
         
         
         

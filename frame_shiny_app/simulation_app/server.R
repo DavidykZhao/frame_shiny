@@ -11,8 +11,11 @@ library(shiny)
 ### read in the overall data
 data_all = read.csv('./www/all_stages.csv')
 data_all$training_size = as.factor(data_all$training_size)
+data_all$class_num = as.factor(data_all$class_num)
+
 source('www/func1.R')
 source('www/func2.R')
+source('www/func3.R')
 
 
 
@@ -252,8 +255,7 @@ shinyServer(function(input, output) {
       plot_stage2_facet_data('LogisticRegression')
     })
     
-    # output$stage2_overview = renderImage('stage2_overview.png',
-    #   deleteFile = F)
+
     
 
     
@@ -314,6 +316,7 @@ shinyServer(function(input, output) {
       panel_show_stage2$tab_box
     })
     
+    ################################
     ### add download button response 
     button_downloader_stage2 = function(button_name) {
       
@@ -355,13 +358,147 @@ shinyServer(function(input, output) {
       button_downloader_stage2_facet_data(i)
     }
     
-    ## add a download response to the overview plot in stage2 #TODO
-    # output[[button_name]] <- downloadHandler(
-    #   filename = function() { paste(button_name, '.png', sep='') },
-    #   content = function(file) {
-    #     # use re to extract the ds name from the button_name
-    #     ggsave(file, width = 14, plot = plot_stage2_facet_data(sub("_.*", "", button_name,perl=TRUE)), device = "png")
-    #   }
+
+    
+    
+    
+    ########################################################
+    ###########  Stage 3 ##############################
+    ########################################################
+    # add stage3 dataset facet plot
+
+      output$agnews_stage3_facet = renderPlot({
+        
+        plot_stage3_facet_model('agnews')
+      })
+      
+      output$dbpedia_stage3_facet = renderPlot({
+        
+        plot_stage3_facet_model('dbpedia')
+      })
+      
+      output$yelp_stage3_facet = renderPlot({
+        
+        plot_stage3_facet_model('yelp')
+      })
+      
+      output$amazon_stage3_facet = renderPlot({
+        
+        plot_stage3_facet_model('amazon')
+      })
+      
+      output$customer_stage3_facet = renderPlot({
+        
+        plot_stage3_facet_model('customer')
+    })
+    
+
+    ###### add stage2 dataset facet data plot #######
+    output$bert_stage3_facet_data = renderPlot({
+      
+      plot_stage3_facet_data('BERT')
+    })
+    
+    output$rf_stage3_facet_data = renderPlot({
+      
+      plot_stage3_facet_data('RandomForest')
+    })
+    
+    output$linearsvc_stage3_facet_data = renderPlot({
+      
+      plot_stage3_facet_data('LinearSVC')
+    })
+    
+    output$nb_stage3_facet_data = renderPlot({
+      
+      plot_stage3_facet_data('NaiveBayes')
+    })
+    
+    output$logisticregression_stage3_facet_data = renderPlot({
+      
+      plot_stage3_facet_data('LogisticRegression')
+    })
+    
+    
+    ### add reactive values for the buttons in stage3
+    panel_show_stage3 <- reactiveValues(tab_box = NULL, title = NULL)
+    
+    observeEvent(input$facet_ds_stage3, {
+      
+      panel_show_stage3$title = tags$h3("Performances of a certain model across datasets with different number of classes")
+      panel_show_stage3$tab_box <- {
+        fluidRow(column(width = 12,
+                        br(),
+                        panel_show_stage3$title,
+                        tb_stage3_facet_data))
+        
+      }
+    })
+    
+    observeEvent(input$facet_model_stage3, {
+      
+      panel_show_stage3$title = tags$h3("Performances of models in a certain dataset with different number of classes")
+      panel_show_stage3$tab_box <- {
+        fluidRow(column(width = 12,
+                        br(),
+                        panel_show_stage3$title,
+                        tb_stage3_facet_model))
+        
+      }
+    })
+
+    output$button_reactive_plot_stage3 <- renderUI({
+      if (is.null(panel_show_stage3$tab_box)) return()
+      panel_show_stage3$tab_box
+    })
+    
+    
+    
+    ### add download button response 
+    button_downloader_stage3 = function(button_name) {
+      
+      output[[button_name]] <- downloadHandler(
+        filename = function() { paste(button_name, '.png', sep='') },
+        content = function(file) {
+          # use re to extract the ds name from the button_name
+          ggsave(file, width = 14, plot = plot_stage3_facet_model(sub("_.*", "", button_name,perl=TRUE)), device = "png")
+        }
+      )
+    }
+    
+    for (i in c('customer_button_stage3',
+                'amazon_button_stage3',
+                'yelp_button_stage3',
+                'dbpedia_button_stage3',
+                'agnews_button_stage3')){
+      button_downloader_stage3(i)
+    }
+    
+    ##### stage3 facet data buttons
+    ### add download button response 
+    button_downloader_stage3_facet_data = function(button_name) {
+      
+      output[[button_name]] <- downloadHandler(
+        filename = function() { paste(button_name, '.png', sep='') },
+        content = function(file) {
+          # use re to extract the ds name from the button_name
+          ggsave(file, width = 14, plot = plot_stage3_facet_data(sub("_.*", "", button_name,perl=TRUE)), device = "png")
+        }
+      )
+    }
+    
+    for (i in c('LogisticRegression_button_stage3',
+                'LinearSVC_button_stage3',
+                'NaiveBayes_button_stage3',
+                'RandomForest_button_stage3',
+                'BERT_button_stage3')){
+      button_downloader_stage3_facet_data(i)
+    }
+    
+    
+    
+    
+    
     
     
     

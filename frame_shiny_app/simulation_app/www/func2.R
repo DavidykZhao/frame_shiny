@@ -15,6 +15,7 @@ scale_fill_Publication <- function(...){
 # read in the data
 data_all = read.csv('./www/all_stages.csv')
 data_all$training_size = as.factor(data_all$training_size)
+data_all$class_num = as.factor(data_all$class_num)
 
 # UI funtions
 ########################################################
@@ -118,7 +119,7 @@ tb_stage2_facet_data = tabBox(
 plot_stage2_facet_model = function(ds_name) {
   
   data_all %>%
-    filter(stage != 'stage3') %>%
+    filter(stage == 'stage2') %>%
     filter(dataset == ds_name) %>%
     ggplot(aes(x = training_size, y = accuracy)) +
     #stat_boxplot(geom="errorbar", width=.5)+
@@ -143,7 +144,7 @@ plot_stage2_facet_model = function(ds_name) {
 plot_stage2_facet_data = function(modelname) {
   
   data_all %>%
-    filter(stage != 'stage3') %>%
+    filter(stage == 'stage2') %>%
     filter(model_name == modelname) %>%
     ggplot(aes(x = training_size, y = accuracy)) +
     #stat_boxplot(geom="errorbar", width=.5)+

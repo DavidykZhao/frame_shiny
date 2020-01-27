@@ -15,90 +15,91 @@ scale_fill_Publication <- function(...){
 # read in the data
 data_all = read.csv('./www/all_stages.csv')
 data_all$training_size = as.factor(data_all$training_size)
+data_all$class_num = as.factor(data_all$class_num)
 
 # UI funtions
 ########################################################
 # tabBox for stage 1 - model performances over datasets
-tb_stage2_facet_model = tabBox(
+tb_stage3_facet_model = tabBox(
   title = "Datasets",
   # The id lets us use input$id on the server to find the current tab
-  id = "tabset_stage2_facet", 
+  id = "tabset_stage3_facet", 
   width = 12,
   tabPanel("AG News",
            fluidRow(   
-             plotOutput('agnews_stage2_facet')),
-           downloadBttn("agnews_button_stage2", "Download", style = 'unite', size = 'sm')
+             plotOutput('agnews_stage3_facet')),
+           downloadBttn("agnews_button_stage3", "Download", style = 'unite', size = 'sm')
            
   ),
   
   tabPanel("DBPedia",
            fluidRow(   
-             plotOutput('dbpedia_stage2_facet'),
-             downloadBttn("dbpedia_button_stage2", "Download", 
+             plotOutput('dbpedia_stage3_facet'),
+             downloadBttn("dbpedia_button_stage3", "Download", 
                           style = 'unite', size = 'sm')
            )),
   
   tabPanel("Yelp",
            fluidRow( 
-             plotOutput('yelp_stage2_facet'),
-             downloadBttn("yelp_button_stage2", "Download", 
+             plotOutput('yelp_stage3_facet'),
+             downloadBttn("yelp_button_stage3", "Download", 
                           style = 'unite', size = 'sm')
            )),
   
   tabPanel("Amazon",
            fluidRow(   
-             plotOutput('amazon_stage2_facet'),
-             downloadBttn("amazon_button_stage2", "Download", 
+             plotOutput('amazon_stage3_facet'),
+             downloadBttn("amazon_button_stage3", "Download", 
                           style = 'unite', size = 'sm')
            )),
   
   tabPanel("Customer",
            fluidRow(  
-             plotOutput('customer_stage2_facet'),
-             downloadBttn("customer_button_stage2", "Download", 
+             plotOutput('customer_stage3_facet'),
+             downloadBttn("customer_button_stage3", "Download", 
                           style = 'unite', size = 'sm')
            )))
 
 
-######  facet_dta tabBox
+######  facet_dta tabBox ####################
 
-tb_stage2_facet_data = tabBox(
+tb_stage3_facet_data = tabBox(
   title = "Models",
   # The id lets us use input$id on the server to find the current tab
-  id = "tabset_stage2_facet_data", 
+  id = "tabset_stage3_facet_data", 
   width = 12,
   tabPanel("BERT",
            fluidRow(   
-             plotOutput('bert_stage2_facet_data')),
-           downloadBttn("BERT_button_stage2", "Download", style = 'unite', size = 'sm')
+             plotOutput('bert_stage3_facet_data')),
+           downloadBttn("BERT_button_stage3", "Download", style = 'unite', size = 'sm')
            
   ),
   
   tabPanel("RandomForest",
            fluidRow(   
-             plotOutput('rf_stage2_facet_data'),
-             downloadBttn("RandomForest_button_stage2", "Download", 
+             plotOutput('rf_stage3_facet_data'),
+             downloadBttn("RandomForest_button_stage3", "Download", 
                           style = 'unite', size = 'sm')
            )),
   
   tabPanel("NaiveBayes",
            fluidRow( 
-             plotOutput('nb_stage2_facet_data'),
-             downloadBttn("NaiveBayes_button_stage2", "Download", 
+             plotOutput('nb_stage3_facet_data'),
+             downloadBttn("NaiveBayes_button_stage3", "Download", 
                           style = 'unite', size = 'sm')
            )),
   
   tabPanel("LinearSVC",
            fluidRow(   
-             plotOutput('linearsvc_stage2_facet_data'),
-             downloadBttn("LinearSVC_button_stage2", "Download", 
+             plotOutput('linearsvc_stage3_facet_data'),
+             downloadBttn("LinearSVC_button_stage3", "Download", 
                           style = 'unite', size = 'sm')
            )),
   
   tabPanel("LogisticRegression",
            fluidRow(  
-             plotOutput('logisticregression_stage2_facet_data'),
-             downloadBttn("LogisticRegression_button_stage2", "Download", 
+             plotOutput('logisticregression_stage3_facet_data'),
+             downloadBttn("LogisticRegression_button_stage3", "Download", 
                           style = 'unite', size = 'sm')
            )))
 ########################################################
@@ -115,50 +116,53 @@ tb_stage2_facet_data = tabBox(
 ############## Server functions ########################
 #########################################################
 
-plot_stage2_facet_model = function(ds_name) {
+plot_stage3_facet_model = function(ds_name) {
   
   data_all %>%
-    filter(stage != 'stage3') %>%
     filter(dataset == ds_name) %>%
-    ggplot(aes(x = training_size, y = accuracy)) +
-    #stat_boxplot(geom="errorbar", width=.5)+
+    filter(training_size != 10000) %>%
+    ggplot(aes(x = training_size, y =accuracy, color = class_num ))+
     geom_boxplot()+
     stat_summary(fun=mean, geom="smooth", 
-                 aes(group= model_name),lwd=0.5, alpha = 0.5)+
-    theme_bw()+
+                 aes(group= class_num),lwd=0.5, alpha = 0.5)+
     academic_theme+
+    theme_bw()+
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          legend.position = c(0.70, 0.2))+
+    facet_grid(~ model_name)+
+    theme(axis.title.x=element_blank(),
+          axis.text.x = element_text(size = 6))+
+    labs(color = 'Class name')+
     scale_fill_Publication()+
     # scale_fill_grey()+
     scale_colour_Publication()+
-    theme(legend.text = element_text(size=10),
-          legend.key.size = unit(1, "lines"),
-          legend.position = c(0.8, 0.15))+
-    facet_grid(~ model_name)+
-    labs(title = paste('Performances of models as training size grows for', ds_name, 'dataset'))
+    theme(legend.position = "bottom")
 }
 
 
 ## facet by datasets function
 
-plot_stage2_facet_data = function(modelname) {
+plot_stage3_facet_data = function(modelname) {
   
   data_all %>%
-    filter(stage != 'stage3') %>%
     filter(model_name == modelname) %>%
-    ggplot(aes(x = training_size, y = accuracy)) +
-    #stat_boxplot(geom="errorbar", width=.5)+
+    filter(training_size != 10000) %>%
+    ggplot(aes(x = training_size, y =accuracy, color = class_num ))+
     geom_boxplot()+
     stat_summary(fun=mean, geom="smooth", 
-                 aes(group= dataset),lwd=0.5, alpha = 0.5)+
-    theme_bw()+
+                 aes(group= class_num),lwd=0.5, alpha = 0.5)+
     academic_theme+
-    scale_fill_Publication()+
-    # scale_fill_grey()+
-    scale_colour_Publication()+
-    theme(legend.text = element_text(size=10),
-          legend.key.size = unit(1, "lines"),
-          legend.position = c(0.8, 0.15))+
+    theme_bw()+
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          legend.position = c(0.80, 0.1))+
     facet_grid(~ dataset)+
-    labs(title = paste('Performances of', modelname, 'as training size grows'))
+    theme(axis.title.x=element_blank(),
+          axis.text.x = element_text(size = 6))+
+    labs(color = 'Class name')+
+    scale_colour_viridis_d()+
+    theme(legend.position = "bottom")
+
 }
 
