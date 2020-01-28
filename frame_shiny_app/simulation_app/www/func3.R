@@ -125,11 +125,8 @@ plot_stage3_facet_model = function(ds_name) {
     geom_boxplot()+
     stat_summary(fun=mean, geom="smooth", 
                  aes(group= class_num),lwd=0.5, alpha = 0.5)+
-    academic_theme+
     theme_bw()+
-    theme(panel.grid.major = element_blank(),
-          panel.grid.minor = element_blank(),
-          legend.position = c(0.70, 0.2))+
+    academic_theme+
     facet_grid(~ model_name)+
     theme(axis.title.x=element_blank(),
           axis.text.x = element_text(size = 10))+
@@ -152,11 +149,8 @@ plot_stage3_facet_data = function(modelname) {
     geom_boxplot()+
     stat_summary(fun=mean, geom="smooth", 
                  aes(group= class_num),lwd=0.5, alpha = 0.5)+
-    academic_theme+
     theme_bw()+
-    theme(panel.grid.major = element_blank(),
-          panel.grid.minor = element_blank(),
-          legend.position = c(0.80, 0.1))+
+    academic_theme+
     facet_grid(~ dataset)+
     theme(axis.title.x=element_blank(),
           axis.text.x = element_text(size = 10))+

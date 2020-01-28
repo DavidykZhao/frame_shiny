@@ -100,7 +100,7 @@ body <- dashboardBody(
                                            color = 'default', icon = icon("database"))),
                 column(width = 3, offset = 1,
                                 actionBttn("facet_ds", label = "Facet by datasets", style = 'unite',
-                                           color = 'default', icon = icon("database"))),
+                                           color = 'royal', icon = icon("database"))),
                 column(width = 3, offset = 1,
                        actionBttn("overview_stage2", label = "Overview", style = 'unite',
                                   color = 'success', icon = icon("database"))),
@@ -118,7 +118,7 @@ body <- dashboardBody(
                                             color = 'default', icon = icon("database"))),
                           column(width = 4, offset = 2,
                                  actionBttn("facet_ds_stage3", label = "Facet by datasets", style = 'unite',
-                                            color = 'default', icon = icon("database"))),
+                                            color = 'royal', icon = icon("database"))),
               
                     
                 ),      
@@ -147,6 +147,6 @@ body <- dashboardBody(
 
 
 
-dashboardPage(header, sidebar, body)
+dashboardPage(header, sidebar, body, skin = 'black')
 
 

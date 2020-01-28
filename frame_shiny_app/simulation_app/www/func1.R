@@ -177,7 +177,7 @@ academic_theme =  theme(plot.title = element_text(face="bold", size=15), # use t
                         panel.grid.minor = element_blank(), # switch off minor gridlines
                         legend.position = 'bottom', # manually position the legend (numbers being from 0,0 at bottom left of whole plot to 1,1 at top right)
                         legend.title = element_blank(), # switch off the legend title
-                        legend.text = element_text(size=8),
+                        legend.text = element_text(size= 10),
                         legend.key.size = unit(0.5, "lines"),
                         legend.key = element_blank(),
                         axis.text.x = element_text(size = 12),
