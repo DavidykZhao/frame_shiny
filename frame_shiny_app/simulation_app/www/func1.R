@@ -17,10 +17,11 @@ tb_stage1 = tabBox(
   title = "Datasets",
   # The id lets us use input$tabset1 on the server to find the current tab
   id = "tabset1", 
-  width = 10, 
+  width = 12, 
   tabPanel("AG News",
-           fluidRow(   
+           fluidRow( 
            plotOutput('agnews_stage1')),
+           br(),
            downloadBttn("agnews_button_stage1", "Download", style = 'unite', size = 'sm')
            
   ),
@@ -59,7 +60,7 @@ tb_stage1_ds_base = tabBox(
   title = "Models",
   # The id lets us use input$tabset1 on the server to find the current tab
   id = "tabset1_ds_base", 
-  width = 10, 
+  width = 12, 
   tabPanel("BERT",
            fluidRow(           
              plotOutput('bert_stage1')),

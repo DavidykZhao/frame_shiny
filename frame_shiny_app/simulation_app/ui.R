@@ -12,9 +12,13 @@ library(tidyverse)
 #install.packages('shinydashboard')
 library(shinydashboard)
 library(shinyWidgets)
+#install.packages('shinythemes')
+library(shinythemes)
 source('www/func1.R')
 source('www/func2.R')
 source('www/func3.R')
+source('www/introduction_page_fluidrow_obj.R')
+
 
 data_all = read.csv('./www/all_stages.csv')
 data_all$training_size = as.factor(data_all$training_size)
@@ -27,7 +31,7 @@ header <- dashboardHeader(
     title = 'Visualization of model performances',
     titleWidth = 350
     
-    )
+)
 
 
 
@@ -53,39 +57,34 @@ sidebar <- dashboardSidebar(
 
 
 body <- dashboardBody(
+  tags$head(
+    tags$link(rel = "stylesheet", type = "text/css", href = "customshiny.css")
+  ),
+  #includeCSS("customeshiny.css"),
+  
     tabItems(
        tabItem( tabName = "dashboard",
-         fluidRow(column(8, offset = 2,
-                         h1("Welcome"),
-                         h2("test of this function")   
-                         
-                         
-                         )
+ 
+                intro_fluidrow         
+                        
+                         ), # closing bracket for the first tabItem
 
-           
-           
-           
-         )
-         
-         
-         
-       ), # closing braket for the first tabItem
-      
+          
       
         tabItem(tabName = "Stage_1",
                 # Add three buttons to control the panel presentations
                 fluidRow( br(),
                          column(width = 3, offset = 1,
                   actionBttn("m_o_d", label = "Models on a dataset", style = 'unite',
-                           color = 'default', icon = icon("database"))
+                           color = 'default', size = 'sm', icon = icon("database"))
                   ),
                 
                 column(width = 3, offset = 1, actionBttn("m_a_d", label = "Model across datasets", style = 'unite',
-                           color = 'success', icon = icon("brain"))
+                           color = 'success', size = 'sm',icon = icon("brain"))
                        ),
                 
                 column(width = 3, offset = 1, actionBttn("ms_a_d", label = "Models across datasets", style = 'unite',
-                           color = 'royal', icon = icon("object-group"))
+                           color = 'royal', size = 'sm',icon = icon("object-group"))
                        ),
                 ),
                 uiOutput("button_reactive_plot")

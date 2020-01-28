@@ -158,7 +158,7 @@ shinyServer(function(input, output) {
       
         panel_show$title = tags$h2("Performances of models on a certain dataset")
         panel_show$tab_box <- {
-          fluidRow(column(width = 10, offset = 1,
+          fluidRow(column(width = 12, 
           br(),
           panel_show$title,
           tb_stage1))
@@ -170,7 +170,7 @@ shinyServer(function(input, output) {
     observeEvent(input$m_a_d, {
       panel_show$title = tags$h2("Performance of a certain model across datasets")
       panel_show$tab_box <- {
-        fluidRow(column(width = 10, offset = 1,br(),
+        fluidRow(column(width = 12, br(),
                  panel_show$title,
                  tb_stage1_ds_base))
 
@@ -181,7 +181,7 @@ shinyServer(function(input, output) {
     observeEvent(input$ms_a_d, {
       panel_show$title = tags$h2("Performance of models across datasets")
       panel_show$tab_box <- {
-        fluidRow(column(width = 10, offset = 1,
+        fluidRow(column(width = 12, 
                  br(),
                  panel_show$title,
                  tb_comprehensive_stage1))
