@@ -24,13 +24,15 @@ intro_fluidrow = fluidRow(
 
                                  
                 h1("Welcome"),
+                br(),
 
                 p("This is a project to visualize the simulation results from 
                             different machine learning and deep learning models' performances on
                             textual classification"),
-                
-                h1('motivation')
-                
+               
+                br(),
+                h1('motivation'),
+                br(),
                 p("Even though transfer learning NLP models have pushed the boundary and
                   break the SOTA (State-of-the-Art) records in multiple NLP tasks, little is knowns about 
                   their performances under small training sizes; especially, little research has shown the stability of the models' performances"),
@@ -40,19 +42,43 @@ intro_fluidrow = fluidRow(
                 
                 p("Further, this study adopts the most representative transfer learning models: BERT (Bidirectional Encoder Representations from Transformers) and 
                   XLNet (Generalized Autoregressive Pretraining for Language Understanding) and contrast them to the traditional bag-of-words approach utilized in machine learning models "),
+                br(),
                 
-                h1("The experiments/simulations"),
               
-                p(paste("There are three stages for those", nrow(data_all), "experiments:")),
+                
+                
+                h1("The experiments"),
+                
+                h3("Dataset"),
+                p("There are in total of 5 datasets. These datasets were chosen because they
+                  are either the benchmark datasets NLP researcher use, or the common daaset practitioners use.
+                  These datasets and their corresponding information are provided below:"),
+                DT::dataTableOutput("data_infotable"),
+                
+                
+                
+                br(),
+              
+                p(paste("The", nrow(data_all), "experiments could be collapsed into 3 stages:")),
                 
                 tags$ol(
                   tags$li("Stage 1: The marginal accuracy of different models across different datasets"), 
                   tags$li("Stage 2: The accuracy of different models as training size grows across different datasets"), 
                   tags$li("Stage 2: The accuracy of different models as training size grows with different number of classes across different datasets")
-                ) # closing the tags$ol obj
+                ), # closing the tags$ol obj
+                
+                h3('Stage 1 information'), 
+                p("In stage 1, the models were run across datasets at a relative large datasize (10000). In this stage,
+                the goal is to investigate the marginal performance of those models and compare them to the current SOTA results.
+                  "),
+                p("For each machine learning models, 10 simulations were run for each dataset; for each deep learning models, 
+                  5 simulations were run for each dataset. See table below"),
+                DT::dataTableOutput("stage1_table" ),
+                
+                h3('Stage 2 information'), 
                 
                 
-                  
+                
                 
                 
                 

@@ -8,6 +8,8 @@
 #
 
 library(shiny)
+library(DT) 
+
 
 ### read in the overall data
 data_all = read.csv('./www/all_stages.csv')
@@ -438,7 +440,7 @@ shinyServer(function(input, output) {
     
     observeEvent(input$facet_model_stage3, {
       
-      panel_show_stage3$title = tags$h3("Performances of models in a certain dataset with different number of classes")
+      panel_show_stage3$title = tags$h2("Performances in a certain dataset with different number of classes")
       panel_show_stage3$tab_box <- {
         fluidRow(column(width = 12,
                         br(),
@@ -497,11 +499,20 @@ shinyServer(function(input, output) {
     }
     
     
+    ############################################
+    ######## output object for intro page
+    ############################################
+    output$stage1_table = renderDataTable(
+      DT::datatable(data_all %>% filter(stage == 'stage1') %>%
+                      group_by(model_name, dataset) %>%
+                      tally())
+
+    )
     
-    
-    
-    
-    
+    # output$data_infotable = renderDataTable(
+    #   DT::datatable()
+    #   
+    # )
     
     
     
