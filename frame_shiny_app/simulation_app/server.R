@@ -158,7 +158,7 @@ shinyServer(function(input, output) {
     
     observeEvent(input$m_o_d, {
       
-        panel_show$title = tags$h2("Performances of models on a certain dataset")
+        panel_show$title = tags$h3("Performances of models on a certain dataset")
         panel_show$tab_box <- {
           fluidRow(column(width = 12, 
           br(),
@@ -170,7 +170,7 @@ shinyServer(function(input, output) {
     
     # m.a.d button observe event
     observeEvent(input$m_a_d, {
-      panel_show$title = tags$h2("Performance of a certain model across datasets")
+      panel_show$title = tags$h3("Performance of a certain model across datasets")
       panel_show$tab_box <- {
         fluidRow(column(width = 12, br(),
                  panel_show$title,
@@ -181,7 +181,7 @@ shinyServer(function(input, output) {
     
     # ms.a.d button observe event
     observeEvent(input$ms_a_d, {
-      panel_show$title = tags$h2("Performance of models across datasets")
+      panel_show$title = tags$h3("Performance of models across datasets")
       panel_show$tab_box <- {
         fluidRow(column(width = 12, 
                  br(),
@@ -268,7 +268,7 @@ shinyServer(function(input, output) {
 
     observeEvent(input$facet_model, {
       
-      panel_show_stage2$title = tags$h2("Performances of models on a certain dataset")
+      panel_show_stage2$title = tags$h3("Performances of models on a certain dataset")
       panel_show_stage2$tab_box <- {
         fluidRow(column(width = 12,
           br(),
@@ -282,7 +282,7 @@ shinyServer(function(input, output) {
     # add the second observeEvent here
     observeEvent(input$facet_ds, {
       
-      panel_show_stage2$title = tags$h2("Performances of a certain model across datasets")
+      panel_show_stage2$title = tags$h3("Performances of a certain model across datasets")
       panel_show_stage2$tab_box <- {
         fluidRow(column(width = 12,
                         br(),
@@ -295,7 +295,7 @@ shinyServer(function(input, output) {
     # add the third observeEvent here
     observeEvent(input$overview_stage2, {
       
-      panel_show_stage2$title = tags$h2("Performances of models across datasets")
+      panel_show_stage2$title = tags$h3("Performances of models across datasets")
       panel_show_stage2$tab_box <- {
         fluidRow(column(width = 12,
                         br(),
@@ -440,7 +440,7 @@ shinyServer(function(input, output) {
     
     observeEvent(input$facet_model_stage3, {
       
-      panel_show_stage3$title = tags$h2("Performances in a certain dataset with different number of classes")
+      panel_show_stage3$title = tags$h3("Performances in a certain dataset with different number of classes")
       panel_show_stage3$tab_box <- {
         fluidRow(column(width = 12,
                         br(),
@@ -508,11 +508,32 @@ shinyServer(function(input, output) {
                       tally())
 
     )
+
+    output$data_infotable = renderTable(striped = T, hover = T, bordered = T,
+                                        {
+      ds = list('Dataset' = c('AG’s News', 'DBPedia', 'Yelp Review Full', 'Amazon Review Full', 'Customer complaint'),
+                'Classes' = c(4, 13, 5, 5, 18),
+                'Type' = c('Topic','Topic', 'Sentiment', 'Sentiment', 'Topic'))
+      ds$Classes = as.integer(ds$Classes)
+      data.frame(ds)
+    }
+)
     
-    # output$data_infotable = renderDataTable(
-    #   DT::datatable()
-    #   
-    # )
+    output$stage2_table = renderDataTable(
+      DT::datatable(data_all %>% filter(stage == 'stage2') %>%
+                      group_by(model_name, dataset, training_size, class_num) %>%
+                      tally())
+      
+    )
+    
+    output$stage3_table = renderDataTable(
+      DT::datatable(data_all %>% filter(stage == 'stage3') %>%
+                      group_by(model_name, dataset, training_size, class_num) %>%
+                      tally())
+      
+    )
+    
+    
     
     
     

@@ -12,6 +12,12 @@ intro_fluidrow = fluidRow(
                             <div class="hero-inner">
                                <h1>Deep learning for textual classification</h1>
                                <h2>Transfer learning for NLP classification under small training size</h2>
+                              <a href="https://github.com/DavidykZhao/frame_shiny"><button class="action-button bttn bttn-pill bttn-md bttn-warning bttn-no-outline" type="button">
+  <i class="fa fa-github"></i>
+  View repo
+</button></a>
+
+
                            </div>
                            </section> 
                          '}),
@@ -53,7 +59,7 @@ intro_fluidrow = fluidRow(
                 p("There are in total of 5 datasets. These datasets were chosen because they
                   are either the benchmark datasets NLP researcher use, or the common daaset practitioners use.
                   These datasets and their corresponding information are provided below:"),
-                DT::dataTableOutput("data_infotable"),
+                tableOutput("data_infotable"),
                 
                 
                 
@@ -67,18 +73,47 @@ intro_fluidrow = fluidRow(
                   tags$li("Stage 2: The accuracy of different models as training size grows with different number of classes across different datasets")
                 ), # closing the tags$ol obj
                 
+                br(),
+                
                 h3('Stage 1 information'), 
                 p("In stage 1, the models were run across datasets at a relative large datasize (10000). In this stage,
-                the goal is to investigate the marginal performance of those models and compare them to the current SOTA results.
+                the goal is to investigate the marginal performances of those models and compare them to the current SOTA results.
                   "),
                 p("For each machine learning models, 10 simulations were run for each dataset; for each deep learning models, 
-                  5 simulations were run for each dataset. See table below"),
+                  5 simulations were run for each dataset. See table below:"),
                 DT::dataTableOutput("stage1_table" ),
                 
                 h3('Stage 2 information'), 
+                p("In stage 2, the models were run across datasets at at different training sizes (from 100 to 5000). In this stage,
+                the goal is to investigate the performances of models at different training sizes and contrast the deep learning models with traditional 
+                machine learning models in the bag-of-words fashion."),
+                p("For each machine learning models, 5 simulations were run for each dataset (with the exception that there are 10 simulations for each training size for the DBPeida and AG's NEWS datasets); 
+                for each deep learning models, 5 simulations were run for each dataset. See table below:"),
+                DT::dataTableOutput("stage2_table"),
                 
                 
+                h3('Stage 3 information'), 
+                p(paste("In stage 3, the models were run across datasets at at different training sizes (from 100 to 5000) at a smaller classes. In this stage,
+                the goal is to investigate the performances of models at different training sizes with less classes (compared with stage 2) and contrast the deep learning models with traditional 
+                machine learning models in the bag-of-words fashion.")),
+                p("For each machine learning models, 5 simulations were run for each dataset (with the exception that there are 10 simulations for each training size for the DBPeida and AG's NEWS datasets); 
+                for each deep learning models, 5 simulations were run for each dataset. See table below:"),
+                p("Notice the datasets are with less classes (e.g. 3 or 5 classes rather than 5 or 13) than stage 2."),
+                DT::dataTableOutput("stage3_table"),
                 
+                br(),
+                
+                h1("How to navigate this app"),
+                br(),
+                p("At the top left corner near the title 'Visualization of model performances' you will find a button
+                to unfold the sidebar menu."),
+                p("You could click stages to view the accuracy of the experiments within the corresponding stage."),
+                p("Within each stage, you will find 2 or 3 buttons showing different ways of visualizing the results. 
+                  The results will be plotted after you click the buttons."),
+                
+                br(),
+                br()
+              
                 
                 
                 

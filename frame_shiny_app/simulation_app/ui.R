@@ -28,9 +28,7 @@ data_all$class_num = as.factor(data_all$class_num)
 
 
 header <- dashboardHeader(
-    title = 'Visualization of model performances',
-    titleWidth = 350
-    
+    title = 'Deep learning for NLP'
 )
 
 
@@ -41,9 +39,8 @@ header <- dashboardHeader(
 sidebar <- dashboardSidebar(
     collapsed = T,
     sidebarMenu(
-        menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
-        menuItem("Introduction", tabName = "Introduction", icon = icon("info-circle")),
-        
+        menuItem("Introduction", tabName = "dashboard", icon = icon("info-circle")),
+
         menuItem("Stage 1", icon = icon("database"), tabName = "Stage_1",
                  badgeLabel = "plot", badgeColor = "green"),
         menuItem("Stage 2", icon = icon("coins"), tabName = "Stage_2",
