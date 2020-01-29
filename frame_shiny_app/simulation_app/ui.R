@@ -39,7 +39,7 @@ header <- dashboardHeader(
 
 
 sidebar <- dashboardSidebar(
-    
+    collapsed = T,
     sidebarMenu(
         menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
         menuItem("Introduction", tabName = "Introduction", icon = icon("info-circle")),

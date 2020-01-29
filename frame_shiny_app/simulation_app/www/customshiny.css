@@ -1,11 +1,58 @@
-@import url("//fonts.googleapis.com/css?family=Anaheim&display=swap");
+@import url("//fonts.googleapis.com/css?family=Inconsolata&display=swap");
+@import url("//fonts.googleapis.com/css?family=Sedgwick+Ave+Display&display=swap");
+@import url("//fonts.googleapis.com/css?family=Roboto:300&display=swap");
 
-* {
-  font-family: 'Anaheim', sans-serif;
-  line-height: 1.1;
+
+body {
+  font-family: 'Roboto', sans-serif; 
+  font-size:  1.9em;
+      background-color: #fff;
+}
+
+
+
+body h1 {
+  
+  font-size: 2.8em;
+  font-family: 'Sedgwick Ave Display', cursive;
   
 }
 
-body {
-  background-color: #fff;
+
+
+
+/* Css for hero sections */
+
+.hero {
+    /* Sizing */
+    width: 100vw;
+    height: 100vh;
+    
+    /* Flexbox stuff */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Text styles */
+    text-align: center;
+    color: white; /* ADD THIS LINE */
+    
+    /* Background styles */
+    background-image:linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('https://miro.medium.com/max/2880/0*JS_UoMKcSp2EyvBJ');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
+
+.hero h1 {
+    /* Text styles */
+    font-size: 5em;
+    font-family: 'Sedgwick Ave Display', cursive;
+
+    
+    /* Margins */
+    margin-top: 0;
+    margin-bottom: 0.5em;
+}
+
