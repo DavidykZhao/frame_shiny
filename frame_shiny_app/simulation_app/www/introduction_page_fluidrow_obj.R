@@ -3,10 +3,7 @@
 
 intro_fluidrow = fluidRow(
                 column(12, 
-                        # img(src='nlp_pic.jpeg', align = "right", 
-                        # style =  "witdh: 2000; height: 120; max-width: 100%; height: auto;
-                        #   display: block; margin-top: auto; margin-bottom: auto;",
-                        # class = 'hero-image'),
+
                        HTML({
                          '<section class="hero">
                             <div class="hero-inner">

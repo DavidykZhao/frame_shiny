@@ -75,6 +75,13 @@ tb_stage2_facet_data = tabBox(
            
   ),
   
+  tabPanel("XLNET",
+           fluidRow(   
+             plotOutput('XLNET_stage2_facet_data')),
+           downloadBttn("XLNET_button_stage2", "Download", style = 'unite', size = 'sm')
+           
+  ),
+  
   tabPanel("RandomForest",
            fluidRow(   
              plotOutput('rf_stage2_facet_data'),

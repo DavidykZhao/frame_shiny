@@ -57,6 +57,8 @@ shinyServer(function(input, output) {
         plot_stage1('customer')
     })
     
+    
+    
     #### add ds_base plot to the output
     output$bert_stage1 = renderPlot({
         
@@ -81,6 +83,11 @@ shinyServer(function(input, output) {
     output$rf_stage1 = renderPlot({
         
         plot_stage1_ds_base('RandomForest')
+    })
+    
+    output$XLNET_stage1 = renderPlot({
+      
+      plot_stage1_ds_base('XLNET')
     })
     
     output$overview_stage1 = renderPlot({
@@ -138,7 +145,8 @@ shinyServer(function(input, output) {
                 'LinearSVC_button_stage1',
                 'NaiveBayes_button_stage1',
                 'LogisticRegression_button_stage1',
-                'RandomForest_button_stage1')){
+                'RandomForest_button_stage1',
+                'XLNET_button_stage1')){
       button_downloader_stage1_ds_base(i)
     }
     
@@ -236,6 +244,11 @@ shinyServer(function(input, output) {
     output$bert_stage2_facet_data = renderPlot({
       
       plot_stage2_facet_data('BERT')
+    })
+    
+    output$XLNET_stage2_facet_data = renderPlot({
+      
+      plot_stage2_facet_data('XLNET')
     })
     
     output$rf_stage2_facet_data = renderPlot({
@@ -357,7 +370,9 @@ shinyServer(function(input, output) {
                 'LinearSVC_button_stage2',
                 'NaiveBayes_button_stage2',
                 'RandomForest_button_stage2',
-                'BERT_button_stage2')){
+                'BERT_button_stage2',
+                'XLNET_button_stage2'
+                )){
       button_downloader_stage2_facet_data(i)
     }
     
@@ -401,6 +416,11 @@ shinyServer(function(input, output) {
       
       plot_stage3_facet_data('BERT')
     })
+      
+    output$XLNET_stage3_facet_data = renderPlot({
+        
+        plot_stage3_facet_data('XLNET')
+      })
     
     output$rf_stage3_facet_data = renderPlot({
       
@@ -494,7 +514,8 @@ shinyServer(function(input, output) {
                 'LinearSVC_button_stage3',
                 'NaiveBayes_button_stage3',
                 'RandomForest_button_stage3',
-                'BERT_button_stage3')){
+                'BERT_button_stage3',
+                'XLNET_button_stage3' )){
       button_downloader_stage3_facet_data(i)
     }
     

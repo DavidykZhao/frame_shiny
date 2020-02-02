@@ -68,6 +68,13 @@ tb_stage1_ds_base = tabBox(
                         style = 'unite', size = 'sm')
   ),
   
+  tabPanel("XLNET",
+           fluidRow(           
+             plotOutput('XLNET_stage1')),
+           downloadBttn("XLNET_button_stage1", "Download", 
+                        style = 'unite', size = 'sm')
+  ),
+  
   tabPanel("LinearSVC",
            fluidRow(           
              plotOutput('linear_svc_stage1'),
