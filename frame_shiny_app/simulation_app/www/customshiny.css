@@ -3,10 +3,15 @@
 @import url("//fonts.googleapis.com/css?family=Roboto:300&display=swap");
 @import url('https://fonts.googleapis.com/css?family=Staatliches&display=swap&subset=latin-ext');
 @import url('https://fonts.googleapis.com/css?family=Marck+Script&display=swap');
+
+<meta name = "viewport" content = "width=device-width, initial-scale = 1.0">
+
+
 body {
   font-family: 'Roboto', sans-serif; 
   font-size:  1.8em;
       background-color: #fff;
+
 }
 
 
@@ -33,6 +38,9 @@ body h3 {
     width: 100vw;
     height: 100vh;
     
+    /* text stuff */
+    text-shadow: 1px 1px 3px #0a0a0a;
+
     /* Flexbox stuff */
     display: flex;
     justify-content: center;
@@ -42,19 +50,38 @@ body h3 {
     text-align: center;
     color: white; /* ADD THIS LINE */
     
-    /* Background styles https://miro.medium.com/max/2880/0*JS_UoMKcSp2EyvBJ */
-    /* https://www.aam-us.org/wp-content/uploads/2018/10/202107-5.-Film_Codes-ccd66a-original-1459772450.jpg' */
-    background-image:linear-gradient(rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.2)), url('https://www.cognixia.com/us/wp-content/uploads/2018/12/How-can-machine-learning-transform-min.jpg');
+    /* webkit css  */
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+    -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+    
+    
+
+    background-image:linear-gradient(rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.2)), url('background1.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    
+    
+    
 }
+
+
+
+
+
 
 .hero h1 {
     /* Text styles */
     font-size: 5em;
     font-family: 'Staatliches', cursive;
+    text-shadow: 1px 1px 3px #0a0a0a;
 
     
     /* Margins */
@@ -112,6 +139,6 @@ body h3 {
     /* Background styles 
     background-color: rgb(230, 210, 50, 0.2); */
   
-  
 }
+
 

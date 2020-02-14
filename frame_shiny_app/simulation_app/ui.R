@@ -57,8 +57,7 @@ body <- dashboardBody(
   tags$head(
     tags$link(rel = "stylesheet", type = "text/css", href = "customshiny.css")
   ),
-  #includeCSS("customeshiny.css"),
-  
+
     tabItems(
        tabItem( tabName = "dashboard",
  
@@ -96,10 +95,10 @@ body <- dashboardBody(
                                            color = 'default', icon = icon("database"))),
                 column(width = 3, offset = 1,
                                 actionBttn("facet_ds", label = "Facet by datasets", style = 'unite',
-                                           color = 'royal', icon = icon("database"))),
+                                           color = 'royal', icon = icon("brain"))),
                 column(width = 3, offset = 1,
                        actionBttn("overview_stage2", label = "Overview", style = 'unite',
-                                  color = 'success', icon = icon("database"))),
+                                  color = 'success', icon = icon("object-group"))),
                 
                 ),      
                 
@@ -114,7 +113,7 @@ body <- dashboardBody(
                                             color = 'default', icon = icon("database"))),
                           column(width = 4, offset = 2,
                                  actionBttn("facet_ds_stage3", label = "Facet by datasets", style = 'unite',
-                                            color = 'royal', icon = icon("database"))),
+                                            color = 'royal', icon = icon("brain"))),
               
                     
                 ),      

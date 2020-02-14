@@ -171,7 +171,8 @@ plot_stage1 = function(ds_name) {
       annotate("text", x= 5, y= mean(ds$accuracy) - 0.005, size = 3, label="Average")+
       geom_hline(yintercept = 1 - sota_errors[ds_name], linetype = 'dotted')+
       annotate('text', x = 1, y = 1 - sota_errors[ds_name], label = 'SOTA',size = 3)+
-      theme(plot.margin=grid::unit(c(0.5,0.5,0.3,0.3), "cm"))
+      theme(plot.margin=grid::unit(c(0.5,0.5,0.3,0.3), "cm"),
+            axis.text.x = element_text(size = 9))
   }
 }
 
