@@ -5,6 +5,6 @@ account: yikai-zhao
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1747533
-bundleId: 2800094
+bundleId: 2800357
 url: https://yikai-zhao.shinyapps.io/simulation_app/
-when: 1581659800.57958
+when: 1581670873.49717
